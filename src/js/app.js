@@ -1,3 +1,5 @@
+import fetchURL from './fetch';
+
 fetchURL().then((json) => {
   const table = document.getElementById('table');
   json.forEach((person) => {
@@ -61,10 +63,4 @@ function createElement(className = null, innerHTML = null, tagName = 'div', idNa
   el.innerHTML = innerHTML;
   el.id = idName;
   return el;
-}
-
-function fetchURL(method = 'GET', userId = '', body = null) {
-  const headers = new Headers({ 'Content-Type': 'application/json' });
-  return fetch(`http://localhost:3001/users/${ userId }`, { method, body, headers })
-    .then((res) => res.json());
 }

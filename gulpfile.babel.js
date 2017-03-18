@@ -12,13 +12,18 @@ import del from 'del'; // https://www.npmjs.com/package/del
 import eslint from 'eslint'; // https://www.npmjs.com/package/gulp-jshint
 import browserSync from 'browser-sync'; // https://www.npmjs.com/package/browser-sync
 
+import webpack from 'webpack';
+import gulpWebpack from 'gulp-webpack';
+
 gulp.task('es6', () =>
-  gulp.src('src/js/*.js')                   // Take all the scripts
-    .pipe(concat('bundle.min.js'))          // Concat all scripts in one file
-    .pipe(sourcemaps.init())
+  gulp.src('src/js/app.js')
+    .pipe(gulpWebpack({
+      output: {
+        filename: 'bundle.min.js',
+      },
+    }, webpack))
     .pipe(babel({ presets: ['es2015'] }))   // Transpile ES6+ into ES5
-    .pipe(sourcemaps.write())
-    .pipe(uglify())                         // Minify
+    .pipe(uglify())
     .pipe(gulp.dest('dist/js'))             // Copy to dist
 );
 
