@@ -1,0 +1,51 @@
+body {
+  font-family: Tahoma;
+}
+
+.table {
+  display: flex;
+  border: 1px solid;
+}
+
+.table-row {
+  display: flex;
+  background-color: lightyellow;
+}
+
+.table-cell {
+  flex-basis: 70px;
+  padding: 5px 10px;
+}
+
+.table-title {
+  display: flex;
+  background-color: lightblue;
+}
+
+.feedback {
+  width: 200px;
+  left: 50%;
+  top: -200px;
+  position: absolute;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.feedback-animation {
+  animation: 4s move_eye forwards;
+}
+
+.feedback-ok {
+  background-color: lightgreen;  
+}
+
+.feedback-error {
+  background-color: red;  
+}
+
+@keyframes move_eye {
+  0% { top: -200px; }
+  20% { top: 20px; }
+  80% { top: 20px; }
+  100% { top: -200px; }
+}
