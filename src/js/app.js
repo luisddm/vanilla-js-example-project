@@ -1,66 +1,42 @@
-import fetchURL from './fetch';
+import $ from './dom';
+import http from './http';
+import notify from './notify';
 
-fetchURL().then((json) => {
-  const table = document.getElementById('table');
-  json.forEach((person) => {
-    const tr = createElement('table-row');
-    tr.appendChild(createElement('table-cell', person.name));
-    tr.appendChild(createElement('table-cell', person.age));
-    const y = tr.appendChild(createElement('table-cell', 'Delete', 'button', person.id));
-    table.appendChild(tr);
-
-    y.addEventListener('click', (e) => {
-      deleteItem(e.target.id);
-    });
+http.get('users').then((res) => {
+  res.forEach((person) => {
+    addRow(person);
   });
-  notify('got');
-})
-.catch((error) => notify(`Error: ${ error }`, 'error'));
+  notify.ok('got');
+}).catch((error) => notify.error(`Error: ${ error }`));
 
-function deleteItem(userId) {
-  fetchURL('DELETE', userId)
+function addRow(item) {
+  const parent = $.id('table');
+  const child = $.createElement('tr', 'table-row');
+  child.appendChild($.createElement('tr', 'table-cell', '', item.name));
+  child.appendChild($.createElement('tr', 'table-cell', '', item.age));
+  const deleteButton = child.appendChild($.createElement('button', 'table-cell', item.id, 'Delete'));
+  parent.appendChild(child);
+
+  deleteButton.addEventListener('click', (e) => {
+    deleteItem(e.target.id);
+  });
+}
+
+function deleteItem(itemId) {
+  http.delete('users', itemId)
     .then(() => {
-      document.getElementById(userId).parentElement.remove();
-      notify('deleted');
-    })
-    .catch((error) => notify(`Error: ${ error }`, 'error'));
+      $.id(itemId).parentElement.remove();
+      notify.ok('deleted');
+    }).catch((error) => notify.error(`Error: ${ error }`));
 }
 
-document.getElementById('add-element').addEventListener('click', () => {
-  const body = JSON.stringify({
-    name: document.getElementById('user').value,
-    age: document.getElementById('age').value,
-  });
-  fetchURL('POST', '', body).then((person) => {
-    const table = document.getElementById('table');
-    const tr = createElement('table-row');
-    tr.appendChild(createElement('table-cell', person.name));
-    tr.appendChild(createElement('table-cell', person.age));
-    const y = tr.appendChild(createElement('table-cell', 'Delete', 'button', person.id));
-    table.appendChild(tr);
-
-    y.addEventListener('click', (e) => {
-      deleteItem(e.target.id);
-    });
-    notify('added');
-  });
+$.id('add-element').addEventListener('click', () => {
+  const body = {
+    name: $.id('user').value,
+    age: $.id('age').value,
+  };
+  http.post('users', body).then((person) => {
+    addRow(person);
+    notify.ok('added');
+  }).catch((error) => notify.error(`Error: ${ error }`));
 });
-
-function notify(msg, type = 'ok') {
-  const feedback = document.querySelector('#feedback');
-  feedback.innerHTML = msg;
-  feedback.classList.remove('feedback-animation');
-  feedback.classList.remove('feedback-ok');
-  feedback.classList.remove('feedback-error');
-  void feedback.offsetWidth; // reflow
-  feedback.classList.add('feedback-animation');
-  feedback.classList.add(`feedback-${ type }`);
-}
-
-function createElement(className = null, innerHTML = null, tagName = 'div', idName = null) {
-  const el = document.createElement(tagName);
-  el.className = className;
-  el.innerHTML = innerHTML;
-  el.id = idName;
-  return el;
-}

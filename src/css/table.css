@@ -1,0 +1,19 @@
+.table {
+  display: flex;
+  border: 1px solid;
+}
+
+.table-row {
+  display: flex;
+  background-color: lightyellow;
+}
+
+.table-cell {
+  flex-basis: 70px;
+  padding: 5px 10px;
+}
+
+.table-title {
+  display: flex;
+  background-color: lightblue;
+}
