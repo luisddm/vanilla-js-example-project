@@ -1,3 +1,5 @@
+@import 'ff';
+
 body {
   font-family: Tahoma;
 }
@@ -36,11 +38,11 @@ body {
 }
 
 .feedback-ok {
-  background-color: lightgreen;  
+  background-color: lightgreen;
 }
 
 .feedback-error {
-  background-color: red;  
+  background-color: red;
 }
 
 @keyframes move_eye {
