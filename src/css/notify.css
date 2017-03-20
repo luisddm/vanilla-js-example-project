@@ -5,6 +5,7 @@
   position: absolute;
   padding: 10px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .feedback-animation {
@@ -21,7 +22,7 @@
 
 @keyframes move_eye {
   0% { top: -200px; }
-  20% { top: 20px; }
-  80% { top: 20px; }
+  20% { top: 30px; }
+  80% { top: 30px; }
   100% { top: -200px; }
 }

@@ -3,19 +3,29 @@ import http from './http';
 import notify from './notify';
 import time from './time';
 
-http.get('users')
-  .then((res) => {
-    res.forEach((person) => {
-      const row = addRow(person, 'boxes');
-      $.name('button', row)[0].addEventListener('click', (e) => {
-        deleteItem(e.target.id);
+loadSortBy('title');
+
+function loadSortBy(sortBy) {
+  $.id('boxes').innerHTML = null;
+  http.get('users')
+    .then((res) => {
+      const sortedRes = res.sort((current, prev) => current[sortBy] > prev[sortBy]);
+      sortedRes.forEach((person) => {
+        const row = addRow(person, 'boxes');
+        $.name('button', row)[0].addEventListener('click', (e) => {
+          deleteItem(e.target.id);
+        });
       });
-    });
-    notify.ok('Lista cargada correctamente');
-  })
-  .catch((error) =>
-    notify.error(error)
-  );
+      notify.ok('Lista cargada correctamente');
+    })
+    .catch((error) =>
+      notify.error(error)
+    );
+}
+
+$.id('sort').addEventListener('change', (ev) => {
+  loadSortBy(ev.target.value);
+});
 
 $.id('add-element').addEventListener('click', (ev) => {
   ev.preventDefault();

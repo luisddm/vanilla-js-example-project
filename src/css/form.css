@@ -13,3 +13,10 @@ button {
 input, textarea {
   font-family: 'Open Sans', Tahoma, sans-serif;
 }
+
+select {
+  font-family: 'Open Sans', Tahoma, sans-serif;
+  border: 0;
+  background-color: var(--light-color);
+  margin-bottom: 5px;
+}
