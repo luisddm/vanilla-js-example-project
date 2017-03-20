@@ -1,20 +1,20 @@
 import gulp from 'gulp';
 
-import rename from 'gulp-rename'; // https://www.npmjs.com/package/gulp-rename
-import uglify from 'gulp-uglify'; // https://www.npmjs.com/package/gulp-uglify
+import rename from 'gulp-rename';
+import uglify from 'gulp-uglify';
 import cleanCSS from 'gulp-clean-css';
-import htmlReplace from 'gulp-html-replace'; // https://www.npmjs.com/package/gulp-html-replace
-import babel from 'gulp-babel'; // https://www.npmjs.com/package/gulp-babel
-import sizereport from 'gulp-sizereport'; // https://www.npmjs.com/package/gulp-sizereport
+import htmlReplace from 'gulp-html-replace';
+import babel from 'gulp-babel';
+import sizereport from 'gulp-sizereport';
 import sourcemaps from 'gulp-sourcemaps';
 import gulpWebpack from 'gulp-webpack';
 import postCSS from 'gulp-postcss';
 
 import webpack from 'webpack';
 import postCSSImport from 'postcss-import';
-import del from 'del'; // https://www.npmjs.com/package/del
-import eslint from 'eslint'; // https://www.npmjs.com/package/gulp-jshint
-import browserSync from 'browser-sync'; // https://www.npmjs.com/package/browser-sync
+import del from 'del';
+import eslint from 'eslint';
+import browserSync from 'browser-sync';
 
 gulp.task('es6', () =>
   gulp.src('src/js/app.js')
@@ -38,7 +38,7 @@ gulp.task('html', () =>
 );
 
 gulp.task('css', () =>
-  gulp.src('src/css/styles.css')          // Take CSS files
+  gulp.src('src/css/styles.css')     // Take CSS files
     .pipe(rename('bundle.min.css'))  // Concat
     .pipe(sourcemaps.init())
     .pipe(postCSS([postCSSImport]))

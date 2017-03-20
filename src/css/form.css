@@ -1,23 +1,15 @@
-:root {
-  --button-bg-color: red;
-  --button-fr-color: white;
-  --button-hover-color: lightpink;
-}
-
-input {
-  padding: 8px 12px;
-  border: 1px solid;
-  font-size: 14px;
+.form {
+  display: flex;
+  flex-direction: column;
 }
 
 button {
-  padding: 8px 12px;
-  border: 1px solid var(--button-bg-color);
-  background-color: var(--button-bg-color);
-  color: var(--button-fg-color);
+  font-size: 14px;
+  height: 30px;
+  padding: 0 12px;
+  font-family: 'Open Sans', Tahoma, sans-serif;
 }
 
-button:hover {
-  background-color: var(--button-hover-color);
-  border: 1px solid var(--button-hover-color);
+input, textarea {
+  font-family: 'Open Sans', Tahoma, sans-serif;
 }

@@ -1,10 +1,14 @@
 const $ = {
-  id(selector) {
-    return document.getElementById(selector);
+  id(selector, parent = document) {
+    return parent.getElementById(selector);
   },
 
-  class(selector) {
-    return document.querySelector(`.${ selector }`);
+  class(selector, parent = document) {
+    return parent.getElementsByClassName(selector);
+  },
+
+  name(selector, parent = document) {
+    return parent.getElementsByTagName(selector);
   },
 
   createElement(tagName, className, idName, innerHTML) {
@@ -13,6 +17,15 @@ const $ = {
     if (innerHTML) el.innerHTML = innerHTML;
     if (idName) el.id = idName;
     return el;
+  },
+
+  toggleDisplay(idName) {
+    const el = document.getElementById(idName);
+    if (el.classList.value.includes('hidden')) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
   },
 };
 

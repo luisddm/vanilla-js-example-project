@@ -1,42 +1,67 @@
 import $ from './dom';
 import http from './http';
 import notify from './notify';
+import time from './time';
 
-http.get('users').then((res) => {
-  res.forEach((person) => {
-    addRow(person);
-  });
-  notify.ok('got');
-}).catch((error) => notify.error(`Error: ${ error }`));
+http.get('users')
+  .then((res) => {
+    res.forEach((person) => {
+      const row = addRow(person, 'boxes');
+      $.name('button', row)[0].addEventListener('click', (e) => {
+        deleteItem(e.target.id);
+      });
+    });
+    notify.ok('Lista cargada correctamente');
+  })
+  .catch((error) =>
+    notify.error(error)
+  );
 
-function addRow(item) {
-  const parent = $.id('table');
-  const child = $.createElement('tr', 'table-row');
-  child.appendChild($.createElement('tr', 'table-cell', '', item.name));
-  child.appendChild($.createElement('tr', 'table-cell', '', item.age));
-  const deleteButton = child.appendChild($.createElement('button', 'table-cell', item.id, 'Delete'));
+$.id('add-element').addEventListener('click', (ev) => {
+  ev.preventDefault();
+  const body = {
+    title: $.id('title').value,
+    date: new Date().toISOString(),
+    description: $.id('description').value,
+  };
+  http.post('users', body)
+    .then((person) => {
+      const row = addRow(person, 'boxes');
+      $.name('button', row)[0].addEventListener('click', (e) => {
+        deleteItem(e.target.id);
+      });
+      notify.ok('Elemento añadido correctamente');
+      $.id('title').value = '';
+      $.id('description').value = '';
+      $.toggleDisplay('add-section');
+    })
+    .catch((error) =>
+      notify.error(error)
+    );
+});
+
+$.id('add-new').addEventListener('click', () => {
+  $.toggleDisplay('add-section');
+});
+
+function addRow(data, element) {
+  const parent = $.id(element);
+  const child = $.createElement('div', 'box row-distribute-items');
+  child.appendChild($.createElement('div', 'box__title', '', data.title));
+  child.appendChild($.createElement('div', 'box__desc', '', data.description));
+  child.appendChild($.createElement('div', 'box__date', '', `${ time.getDate(data.date) } ${ time.getTime(data.date) }`));
+  child.appendChild($.createElement('button', 'box__button', data.id, '×'));
   parent.appendChild(child);
-
-  deleteButton.addEventListener('click', (e) => {
-    deleteItem(e.target.id);
-  });
+  return child;
 }
 
 function deleteItem(itemId) {
   http.delete('users', itemId)
     .then(() => {
       $.id(itemId).parentElement.remove();
-      notify.ok('deleted');
-    }).catch((error) => notify.error(`Error: ${ error }`));
+      notify.ok('Elemento eliminado correctamente');
+    })
+    .catch((error) =>
+      notify.error(error)
+    );
 }
-
-$.id('add-element').addEventListener('click', () => {
-  const body = {
-    name: $.id('user').value,
-    age: $.id('age').value,
-  };
-  http.post('users', body).then((person) => {
-    addRow(person);
-    notify.ok('added');
-  }).catch((error) => notify.error(`Error: ${ error }`));
-});

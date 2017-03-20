@@ -1,0 +1,9 @@
+:root {
+  --primary-color: #6a539a;
+  --light-color: white;
+  --button-hover-color: rgba(163, 29, 166, 0.31);
+  --bg-color: rgba(236, 217, 237, 1);
+  --box-bg-color: #eee;
+  --danger-color: red;
+  --danger-light-color: rgb(73, 36, 36);
+}

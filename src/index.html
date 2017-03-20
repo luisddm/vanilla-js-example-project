@@ -6,19 +6,31 @@
     <!-- endbuild -->
   </head>
   <body>
-    <div id="feedback" class="feedback">
-      Loaded
-    </div>
-    <h1>Lista</h1>
-    <div id="table">
-      <div class="table-title">
-        <div class="table-cell">User</div>
-        <div class="table-cell">Age</div>
+    <div id="feedback" class="feedback"></div>
+
+    <header class="title-section">
+      <div class="content row-distribute-items">
+        <h1 class="title-section__title">Lista</h1>
+        <button class="title-section__button" id="add-new">Nuevo</button>
       </div>
-    </div>
-    <input type="text" id="user" placeholder="User">
-    <input type="number" id="age" placeholder="Age">
-    <button id="add-element">Add</button>
+    </header>
+
+    <section class="add-section hidden" id="add-section">
+      <div class="content">
+        <form class="form" id="form">
+          <input type="text" class="add-section__control" id="title" placeholder="Título">
+          <textarea id="description" class="add-section__control" placeholder="Descripción" rows="3"></textarea>
+          <button type="submit" class="add-section__button" id="add-element">Añadir</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="main-section">
+      <div class="content">
+        <div class="column-distribute-items" id="boxes"></div>
+      </div>
+    </section>
+
     <!-- build:js -->
     <!-- endbuild -->
   </body>
